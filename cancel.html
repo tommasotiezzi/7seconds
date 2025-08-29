@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - Nightlife Matching App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1F1F2E 0%, #16213E 100%);
+            color: #E8E8E8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .failed-container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(42, 42, 62, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .failed-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid #EF4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .x-mark {
+            width: 40px;
+            height: 40px;
+            stroke: #EF4444;
+            stroke-width: 3;
+            fill: none;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #EF4444;
+            margin-bottom: 15px;
+        }
+
+        .failed-message {
+            color: #A0A0B0;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #7B4FE0, #E91B7D);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(123, 79, 224, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(160, 160, 176, 0.2);
+            border: 1px solid rgba(160, 160, 176, 0.3);
+            color: #E8E8E8;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(160, 160, 176, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .failed-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="failed-container">
+        <div class="failed-icon">
+            <svg class="x-mark" viewBox="0 0 52 52">
+                <path d="M16 16 L36 36 M36 16 L16 36" />
+            </svg>
+        </div>
+        
+        <h1>Payment Failed</h1>
+        
+        <p class="failed-message">
+            Your payment could not be processed. You haven't been charged. Please try again or contact your bank if the issue persists.
+        </p>
+        
+        <div class="action-buttons">
+            <a href="/pricing.html" class="btn btn-primary">Try Again</a>
+            <a href="/admin-panel.html" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
