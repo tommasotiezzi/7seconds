@@ -607,5 +607,60 @@
             </div>
         </div>
     </footer>
+    <!-- Add before </body> in your index.html -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe = Stripe('pk_test_51S1TISHfL5hEXlA8245FcuHZlMGnT065TXgaxuUQaZSl0EWMc3fO1WzSTlFObVCjSGMGBMLl65YRWk1jD8LLJLGA00CTLsOBcY');
+
+async function createCheckoutSession(tier) {
+    try {
+        const response = await fetch('https://bvdqbzdiwcrlqmqdcvmv.supabase.co/functions/v1/create-checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tier: tier,
+                organizerId: localStorage.getItem('organizerId') || 'temp_' + Date.now()
+            })
+        });
+
+        const { sessionId } = await response.json();
+        
+        const { error } = await stripe.redirectToCheckout({ sessionId });
+        
+        if (error) {
+            console.error('Stripe error:', error);
+            alert('Payment failed: ' + error.message);
+        }
+    } catch (err) {
+        console.error('Checkout error:', err);
+        alert('Unable to start checkout. Please try again.');
+    }
+}
+
+// Update your pricing cards
+document.addEventListener('DOMContentLoaded', () => {
+    // Map your pricing cards to tiers
+    const pricingButtons = document.querySelectorAll('.price-btn');
+    
+    pricingButtons.forEach((btn, index) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Determine tier based on button position or card content
+            let tier;
+            if (index === 0) tier = 'trial';
+            else if (index === 1) tier = 'basic';
+            else tier = 'premium';
+            
+            createCheckoutSession(tier);
+        });
+    });
+    
+    // Update "Organizer Login" button to go to admin panel
+    document.querySelector('.nav-btn-primary').href = '/admin-panel.html';
+});
+</script>
 </body>
 </html>
