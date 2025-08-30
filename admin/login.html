@@ -6,6 +6,7 @@
     <title>Match Admin - Login</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        /* Keep all your existing styles exactly as they are */
         * {
             margin: 0;
             padding: 0;
@@ -218,6 +219,32 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Add payment success alert styles */
+        .payment-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #22C55E, #10B981);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideInRight 0.5s ease;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -252,7 +279,7 @@
             </div>
 
             <div class="signup-link">
-                Don't have an account? <a href="#" id="signup-link">Contact Administrator</a>
+                Don't have an account? <a href="../index.html" id="signup-link">Get Started</a>
             </div>
         </div>
     </div>
@@ -264,8 +291,36 @@
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Check if already logged in
+        // Check if already logged in or coming from payment
         window.addEventListener('DOMContentLoaded', async () => {
+            // Check if coming from successful payment
+            const paymentSuccess = localStorage.getItem('paymentSuccess');
+            const organizerEmail = localStorage.getItem('organizerEmail');
+            
+            if (paymentSuccess === 'true') {
+                // Clear the flag
+                localStorage.removeItem('paymentSuccess');
+                
+                // Show payment success alert
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'payment-alert';
+                alertDiv.textContent = '✅ Payment successful! Please log in with your credentials.';
+                document.body.appendChild(alertDiv);
+                
+                // Pre-fill email if available
+                if (organizerEmail) {
+                    document.getElementById('email').value = organizerEmail;
+                    document.getElementById('password').focus();
+                }
+                
+                // Remove alert after 5 seconds
+                setTimeout(() => {
+                    alertDiv.style.animation = 'slideInRight 0.5s ease reverse';
+                    setTimeout(() => alertDiv.remove(), 500);
+                }, 5000);
+            }
+            
+            // Check existing session
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 // Check if this is a B2C user (app user) - they shouldn't be here
@@ -356,6 +411,10 @@
                 // Show success message
                 showSuccess('Login successful! Redirecting...');
                 
+                // Clear any remaining localStorage from registration
+                localStorage.removeItem('organizerId');
+                localStorage.removeItem('organizerEmail');
+                
                 // Redirect to admin panel after a short delay
                 setTimeout(() => {
                     window.location.href = 'index.html';
@@ -371,10 +430,11 @@
             }
         });
 
-        // Handle signup link click
+        // Update signup link to go to main landing page
         document.getElementById('signup-link').addEventListener('click', (e) => {
             e.preventDefault();
-            showError('Please contact the administrator to create an organizer account.');
+            // Go up one level to the main landing page
+            window.location.href = '../index.html';
         });
 
         // Helper functions
