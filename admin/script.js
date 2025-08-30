@@ -128,7 +128,7 @@ function checkSubscriptionStatus() {
             if (eventsUsed >= 1) {
                 disableEventCreation('Trial Event Used - Upgrade for More');
                 addStatusMessage(statusMessageDiv,
-                    'You\'ve used your trial event. Upgrade to Basic for 4 events/month.',
+                    'You\'ve used your trial event. Upgrade to Premium for 4 events/month.',
                     'upgrade');
             } else {
                 addStatusMessage(statusMessageDiv,
@@ -144,7 +144,7 @@ function checkSubscriptionStatus() {
             if (remaining <= 0) {
                 disableEventCreation('Monthly Limit Reached - Upgrade');
                 addStatusMessage(statusMessageDiv,
-                    'You\'ve used all 4 events this month. Upgrade to Premium for unlimited.',
+                    'You\'ve used all 4 events this month. Upgrade to Unlimited for all the events you need.',
                     'upgrade');
             } else {
                 addStatusMessage(statusMessageDiv,
@@ -155,7 +155,7 @@ function checkSubscriptionStatus() {
             
         case 'premium':
             addStatusMessage(statusMessageDiv,
-                'Premium Account: Unlimited events and venues',
+                'Unlimited Account: Unlimited events and venues',
                 'success');
             break;
     }
@@ -751,7 +751,7 @@ async function loadSubscriptionInfo() {
         
         ${tier !== 'premium' ? `
             <div class="upgrade-prompt">
-                <h4>Upgrade to ${tier === 'free' ? 'Trial' : 'Premium'}</h4>
+                <h4>Upgrade to ${tier === 'free' ? 'Trial' : 'Unlimited'}</h4>
                 <p>${tier === 'free' ? 'Try one event for €29' : 'Unlock unlimited events and venues'}</p>
                 <button class="btn-upgrade" onclick="handleUpgrade()">Upgrade Now</button>
             </div>
@@ -911,7 +911,7 @@ async function saveVenue(venueData) {
         }
         
         if (tier === 'basic' && savedVenues.length >= 1) {
-            showError('Basic tier limit: You can only save 1 venue. Upgrade to Premium for unlimited venues.');
+            showError('Premium tier limit: You can only save 1 venue. Upgrade to Unlimited for as many venues as you like.');
             return null;
         }
         
@@ -1004,8 +1004,8 @@ async function createEvent(eventData) {
             showError('Free accounts cannot create events. Please upgrade to continue.');
         } else if (error.message?.includes('Trial limit')) {
             showError('You\'ve already used your trial event. Please upgrade to continue.');
-        } else if (error.message?.includes('Basic tier limit')) {
-            showError('You\'ve reached your monthly limit of 4 events. Upgrade to Premium for unlimited events.');
+        } else if (error.message?.includes('Premium tier limit')) {
+            showError('You\'ve reached your monthly limit of 4 events. Upgrade to Unlimited for as many events as you like.');
         } else {
             showError('Failed to create event: ' + error.message);
         }
