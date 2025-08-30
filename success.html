@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful - Nightlife Matching App</title>
+    <title>Payment Successful - 7 Seconds</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -119,14 +119,27 @@
             Your subscription has been activated. You now have access to all premium features.
         </p>
         
-        <a href="/admin-panel.html" class="btn">Go to Dashboard</a>
+        <a href="https://tommasotiezzi.github.io/7seconds_adminpanel/login.html" class="btn" id="dashboardBtn">Go to Dashboard</a>
         
-        <p class="loading-text">Redirecting in <span id="countdown">3</span> seconds...</p>
+        <p class="loading-text">Redirecting in <span id="countdown">5</span> seconds...</p>
     </div>
 
     <script>
+        // Store success flag for the login page to check
+        localStorage.setItem('paymentSuccess', 'true');
+        localStorage.setItem('paymentTimestamp', Date.now().toString());
+        
+        // Get organizer ID from localStorage (set during registration)
+        const organizerId = localStorage.getItem('organizerId');
+        const organizerEmail = localStorage.getItem('organizerEmail');
+        
+        if (organizerId && organizerEmail) {
+            // Store auth credentials for auto-login
+            localStorage.setItem('isAuthenticated', 'true');
+        }
+        
         // Simple countdown and redirect
-        let seconds = 3;
+        let seconds = 5;
         const countdownEl = document.getElementById('countdown');
         
         const countdown = setInterval(() => {
@@ -135,7 +148,7 @@
             
             if (seconds <= 0) {
                 clearInterval(countdown);
-                window.location.href = '/admin-panel.html';
+                window.location.href = 'https://tommasotiezzi.github.io/7seconds_adminpanel/login.html';
             }
         }, 1000);
     </script>
