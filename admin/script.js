@@ -3,8 +3,6 @@ const SUPABASE_URL = 'https://bvdqbzdiwcrlqmqdcvmv.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2ZHFiemRpd2NybHFtcWRjdm12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2ODc3MTcsImV4cCI6MjA3MTI2MzcxN30.aN-6AoFZWr07lmPcIdh-vc-DgFNNL3luXQJw4C18T_g';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Google Places API configuration
-const GOOGLE_API_KEY = 'AIzaSyDF7OvTsuLGaYk-YGp5eci6CiI6iRqasSk';
 const PLACES_API_BASE = 'https://places.googleapis.com/v1/places:searchText';
 const PLACES_PHOTO_BASE = 'https://places.googleapis.com/v1';
 
@@ -1446,6 +1444,7 @@ function switchTab(tabName) {
 // ========================================
 // GOOGLE PLACES SEARCH WITH PHOTOS
 // ========================================
+
 async function searchGooglePlaces(query) {
     console.log('Starting Google Places search for:', query);
     
