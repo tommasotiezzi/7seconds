@@ -6,6 +6,8 @@
     <title>Match Admin Panel</title>
     <!-- Supabase must load first for auth check -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    
     <!-- Immediate auth check before page renders -->
     <script>
         // Immediate auth and user type check to prevent unauthorized access
@@ -399,6 +401,7 @@
             <button class="nav-tab" onclick="switchTab('live')">Live Events</button>
             <button class="nav-tab" onclick="switchTab('upcoming')">Upcoming</button>
             <button class="nav-tab" onclick="switchTab('history')">Past Events</button>
+            <button class="nav-tab" onclick="switchTab('analytics')">Analytics</button>
             <button class="nav-tab" onclick="switchTab('user-details')">User Details</button>
         </div>
 
@@ -644,6 +647,73 @@
                 </div>
             </div>
         </div>
+
+        <div id="analytics-tab" class="tab-content">
+            <h2 style="margin-bottom: 30px; color: #E5E7EB;">Event Analytics</h2>
+    
+            <!-- Overall Analytics Section -->
+            <div class="analytics-section">
+                <div class="section-header">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18h18"></path>
+                            <path d="M18 17V9"></path>
+                            <path d="M13 17V5"></path>
+                            <path d="M8 17v-3"></path>
+                        </svg>
+                        Overall Audience Analytics
+                    </h3>
+                    <button class="btn-refresh" onclick="loadOverallAnalytics()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6"></path>
+                            <path d="M1 20v-6h6"></path>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+                
+                <div id="overall-analytics-content">
+                    <!-- Overall stats will be loaded here -->
+                    <div class="loading">Loading overall analytics...</div>
+                </div>
+            </div>
+            
+            <!-- Event-Specific Analytics List -->
+            <div class="analytics-section">
+                <div class="section-header">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Event Analytics
+                    </h3>
+                </div>
+                
+                <div id="analytics-events-list" class="venue-list">
+                    <div class="loading">Loading past events...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Modal -->
+        <div id="analytics-modal" class="modal">
+            <div class="modal-content analytics-modal-content">
+                <div class="modal-header">
+                    <h2 id="analytics-modal-title">Event Analytics</h2>
+                    <span class="close" onclick="closeAnalyticsModal()">&times;</span>
+                </div>
+                <div class="modal-body analytics-modal-body">
+                    <div id="analytics-content">
+                        <!-- Analytics content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
